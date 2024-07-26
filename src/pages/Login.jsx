@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
 const Container = styled.div`
   display: flex;
@@ -12,11 +13,6 @@ const Container = styled.div`
 
 const ErrorMessage = styled.div`
   color: red;
-`;
-
-const StyledButton = styled.button`
-  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
-  opacity: ${props => props.disabled ? 0.5 : 1};
 `;
 
 const Login = () => {
@@ -53,10 +49,19 @@ const Login = () => {
     event.preventDefault();
 
     // 로그인 처리 로직
+    const loginAPI = import.meta.env.VITE_API_URL + '/api/auth/login';
+    axios.post(loginAPI, 
+      {
+        loginId: id,
+        password: password
+      }).then((res) => {
+        console.log(res);
+      }).catch((err) => {
+        console.log(err);
+      })
 
-    console.log("로그인 버튼 클릭");
-    console.log(id);
-    console.log(password);
+    localStorage.setItem('access-token', response.data.accessToken);
+    
   }
 
   return (
