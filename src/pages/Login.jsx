@@ -11,6 +11,10 @@ const Container = styled.div`
   height: 100vh;
 `;
 
+// const Logo = styled.img`
+
+// `;
+
 const ErrorMessage = styled.div`
   color: red;
 `;
@@ -49,20 +53,22 @@ const Login = () => {
     event.preventDefault();
 
     // 로그인 처리 로직
-    const loginAPI = import.meta.env.VITE_API_URL + '/api/auth/login';
-    axios.post(loginAPI, 
-      {
-        loginId: id,
-        password: password
-      }).then((res) => {
-        localStorage.setItem('token', res.data.accessToken);
-      }).catch((err) => {
-        console.log(err);
-      })
+    api
+    .post('/api/auth/login', {
+      loginId: id,
+      password: password,
+    })
+    .then((res) => {
+      localStorage.setItem('token', res.data.accessToken);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
   }
 
   return (
     <Container>
+      {/* <Logo src="/logo.png" alt="Logo" /> */}
       <label htmlFor="id">아이디</label>
       <input 
         type="text"
