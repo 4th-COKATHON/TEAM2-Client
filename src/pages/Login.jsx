@@ -55,13 +55,10 @@ const Login = () => {
         loginId: id,
         password: password
       }).then((res) => {
-        console.log(res);
+        localStorage.setItem('token', res.data.accessToken);
       }).catch((err) => {
         console.log(err);
       })
-
-    localStorage.setItem('access-token', response.data.accessToken);
-    
   }
 
   return (
