@@ -4,7 +4,7 @@ import ListItem from './ListItem';
 import bottomGradient from '../assets/list_container_bottom_gradient.svg';
 import point from '../assets/tab_selected_point.svg';
 
-const List = ({ capsuleList, isSelf, setIsSelf }) => {
+const List = ({ capsuleList, isSelf, setIsSelf, setOpenModal }) => {
   return (
     <Wrapper>
       <TabDiv>
@@ -39,6 +39,10 @@ const List = ({ capsuleList, isSelf, setIsSelf }) => {
             title={capsule.title}
             date={capsule.date}
             dday={capsule.dday}
+            onClick={() => {
+              setOpenModal(true)
+              setCapsuleId(capsule.articleId)
+            }}
           />
         ))}
       </ListDiv>

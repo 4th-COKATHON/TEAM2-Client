@@ -6,6 +6,8 @@ import capsuleDefault from '../assets/capsule_default.svg';
 import addBtn from '../assets/add_btn.svg';
 import List from '../components/List';
 import api from '../api/api';
+import RegisterModal from '../components/RegisterModal';
+import Capsule from '../components/Capsule';
 
 const Home = () => {
   const [lockedList, setLockedList] = useState([]);
@@ -13,6 +15,8 @@ const Home = () => {
   const [isSelfLocked, setIsSelfLocked] = useState(true);
   const [isSelfOpened, setIsSelfOpened] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [openModal, setOpenModal] = useState(false);
+  const [capsuleId, setCapsuleId] = useState(0);
 
   const fetchLockedData = async () => {
     await api
@@ -66,23 +70,41 @@ const Home = () => {
   return (
     <Wrapper>
       <CapsuleSection>
-        <Logo src={logo} alt="logo" />
-        <h3>
-          손민재님!
-          <br />
-          타임캡슐에 추억을 담아보세요
-        </h3>
-        <CapsuleImg src={capsuleDefault} alt="capsule" />
-        <p>
-          여러분들이 원하는 그날,
-          <br />
-          다시 열어볼 수 있게 도와드려요!
-        </p>
-        <AddBtn src={addBtn} alt="+" />
+        {openModal ? (
+          <Capsule setOpenModal={setOpenModal} capsuleId={capsuleId}/>
+        ) : (
+          <>
+            <Logo src={logo} alt="logo" />
+            <h3>
+              손민재님!
+              <br />
+              타임캡슐에 추억을 담아보세요
+            </h3>
+            <CapsuleImg src={capsuleDefault} alt="capsule" />
+            <p>
+              여러분들이 원하는 그날,
+              <br />
+              다시 열어볼 수 있게 도와드려요!
+            </p>
+            <AddBtn src={addBtn} alt="+" />
+          </>
+        )}
       </CapsuleSection>
       <ListSection>
-        <List capsuleList={lockedList} isSelf={isSelfLocked} setIsSelf={setIsSelfLocked} />
-        <List capsuleList={openedList} isSelf={isSelfOpened} setIsSelf={setIsSelfOpened} />
+        <List
+          capsuleList={lockedList}
+          isSelf={isSelfLocked}
+          setIsSelf={setIsSelfLocked}
+          setOpenModal={setOpenModal}
+          setCapsuleId={setCapsuleId}
+        />
+        <List
+          capsuleList={openedList}
+          isSelf={isSelfOpened}
+          setIsSelf={setIsSelfOpened}
+          setOpenModal={setOpenModal}
+          setCapsuleId={setCapsuleId}
+        />
       </ListSection>
     </Wrapper>
   );
