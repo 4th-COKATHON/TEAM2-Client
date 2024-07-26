@@ -1,7 +1,12 @@
 import React from 'react';
+import RegisterModal from '../components/RegisterModal';
 
 const Register = () => {
-  return <div>글 작성</div>;
+  return (
+    <div>
+      <RegisterModal />
+    </div>
+  );
 };
 
 export default Register;
