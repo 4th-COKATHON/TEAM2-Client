@@ -4,7 +4,9 @@ import ListItem from './ListItem';
 import bottomGradient from '../assets/list_container_bottom_gradient.svg';
 import point from '../assets/tab_selected_point.svg';
 
-const List = () => {
+const List = ({ capsuleList }) => {
+  console.log(capsuleList);
+
   return (
     <Wrapper>
       <TabDiv>
@@ -18,9 +20,15 @@ const List = () => {
         </TabButton>
       </TabDiv>
       <ListDiv>
-        <ListItem />
-        <ListItem />
-        <ListItem />
+        {capsuleList.map((capsule) => (
+          <ListItem
+            key={capsule.articleId}
+            name={capsule.name}
+            title={capsule.title}
+            date={capsule.date}
+            dday={capsule.dday}
+          />
+        ))}
       </ListDiv>
       <BottomGradient img={bottomGradient} />
     </Wrapper>

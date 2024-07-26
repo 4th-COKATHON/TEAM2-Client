@@ -1,12 +1,67 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ListItem from '../components/ListItem';
 import logo from '../assets/app_logo.svg';
 import capsuleDefault from '../assets/capsule_default.svg';
 import addBtn from '../assets/add_btn.svg';
 import List from '../components/List';
+import api from '../api/api';
 
 const Home = () => {
+  const [lockedList, setLockedList] = useState([]);
+  const [openedList, setOpenedList] = useState([]);
+  const [isSelf, setIsSelf] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const fetchLockedData = async () => {
+    await api
+      .get('/api/articles', {
+        params: {
+          lock: true,
+          self: isSelf,
+          page: currentPage,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data.content);
+        setLockedList(res.data.data.content);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const fetchOpenedData = async () => {
+    await api
+      .get('/api/articles', {
+        params: {
+          lock: false,
+          self: isSelf,
+          page: currentPage,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data.content);
+        setOpenedList(res.data.data.content);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    fetchLockedData();
+    fetchOpenedData();
+  }, []);
+
   return (
     <Wrapper>
       <CapsuleSection>
@@ -25,8 +80,8 @@ const Home = () => {
         <AddBtn src={addBtn} alt="+" />
       </CapsuleSection>
       <ListSection>
-        <List />
-        <List />
+        <List capsuleList={lockedList} />
+        <List capsuleList={openedList}/>
       </ListSection>
     </Wrapper>
   );

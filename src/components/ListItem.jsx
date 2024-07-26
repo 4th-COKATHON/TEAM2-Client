@@ -3,20 +3,20 @@ import styled from 'styled-components';
 import logo from '../assets/list_item_logo.svg';
 import arrow from '../assets/arrow_right.svg';
 
-const ListItem = () => {
+const ListItem = ({ name, title, date, dday }) => {
   return (
     <Wrapper>
       <InfoDiv>
-        <p>이름</p>
-        <span>ㅣ2024.12.12</span>
+        <p>{name}</p>
+        <span>ㅣ{date}</span>
       </InfoDiv>
       <ContentDiv>
         <TitleDiv>
           <img src={logo} alt="logo" />
-          <p>제목</p>
+          <p>{title}</p>
         </TitleDiv>
         <RemainDiv>
-          <span>D-100</span>
+          <span>D-{dday}</span>
           <img src={arrow} alt="arrow" />
         </RemainDiv>
       </ContentDiv>
