@@ -14,6 +14,10 @@ const ErrorMessage = styled.div`
   color: red;
 `;
 
+const StyledButton = styled.button`
+  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+  opacity: ${props => props.disabled ? 0.5 : 1};
+`;
 
 const Login = () => {
   const [id, setId] = useState("");
@@ -42,6 +46,8 @@ const Login = () => {
       setPasswordError("");
     }
   }
+
+  const isFormValid = !idError && !passwordError && id && password 
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -73,7 +79,7 @@ const Login = () => {
         onChange={handlePasswordInput}
       />
       {passwordError && <ErrorMessage>{passwordError}</ErrorMessage>}
-      <button onClick={handleLogin}>로그인</button>
+      <button onClick={handleLogin} disabled={!isFormValid}>로그인</button>
       <p className="signup-link">
         <Link to="/signup">회원가입하기</Link>        
       </p>
