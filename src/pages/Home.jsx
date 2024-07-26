@@ -68,7 +68,7 @@ const Home = () => {
   useEffect(() => {
     fetchLockedData();
     fetchOpenedData();
-  }, []);
+  }, [isSelfLocked, isSelfOpened, currentPage]);
 
   useEffect(() => {
     console.log(openModal);
