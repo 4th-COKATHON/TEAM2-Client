@@ -1,32 +1,85 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import logo from '../assets/list_item_logo.svg';
 import SearchBar from './SearchBar';
 import registerBtn from '../assets/register_btn.svg';
+import api from '../api/api';
 
 const RegisterModal = () => {
+  const [reciever, setReciever] = useState('');
+  const [year, setYear] = useState('');
+  const [month, setMonth] = useState('');
+  const [day, setDay] = useState('');
+  const [content, setContent] = useState('');
+
+  const onChangeYear = (e) => {
+    setYear(e.target.value);
+  };
+
+  const onChangeMonth = (e) => {
+    setMonth(e.target.value);
+  };
+
+  const onChangeDay = (e) => {
+    setDay(e.target.value);
+  };
+
+  const onChangeContent = (e) => {
+    setContent(e.target.value);
+  };
+
+  const onSubmit = () => {
+    api.post(
+      '/api/articles',
+      {
+        recieverName: reciever,
+        title: 'title',
+        detail: content,
+        expiredAt: `${year}-${month}-${day}`,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      },
+    ).then((res) => {
+      console.log(res);
+    }).catch((err) => {
+      console.log(err);
+      alert('별자리를 보내는데 실패했습니다.');
+    });
+  };
+
   return (
     <Wrapper>
       <Header>
         <TitleDiv>
           <Logo src={logo} alt="logo" />
-          <SearchBar />
+          <SearchBar reciever={reciever} setReciever={setReciever} />
           <p>에게 보내는 별자리</p>
         </TitleDiv>
         <TimeDiv>
-          <InputBox />
+          <InputBox id="year" name="year" value={year} onChange={onChangeYear} />
           <span>년</span>
-          <InputBox />
+          <InputBox id="month" name="month" value={month} onChange={onChangeMonth} />
           <span>월</span>
-          <InputBox />
+          <InputBox id="day" name="day" value={day} onChange={onChangeDay} />
           <span>일</span>
         </TimeDiv>
       </Header>
       <div style={{ width: '100%', height: '1px', backgroundColor: '#9F9F9F' }} />
       <ContentDiv>
-        <input type="text" placeholder="내용을 입력하세요." />
+        <input
+          type="text"
+          id="content"
+          name="content"
+          value={content}
+          onChange={onChangeContent}
+          placeholder="내용을 입력하세요."
+        />
       </ContentDiv>
-      <SumbitDiv>
+      <SumbitDiv onClick={onSubmit}>
         <SubmitButton src={registerBtn} />
       </SumbitDiv>
     </Wrapper>
@@ -39,8 +92,8 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 70.9375rem;
-  height: 39.8125rem;
+  width: 60.9375rem;
+  height: 30.8125rem;
   border-radius: 2.04513rem;
   border: 1.636px solid var(--Linear, #ce98ca);
   background: var(--Grays-White, #fff);

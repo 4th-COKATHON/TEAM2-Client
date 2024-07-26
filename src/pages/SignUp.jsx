@@ -71,4 +71,19 @@ const Wrapper = styled.div`
   height: 100vh;
 `;
 
-const FieldDiv = styled.div``;
+const FieldDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+  border-radius: 20px;
+  margin: 10px;
+  width: 400px;
+  height: 40px;
+  color: #ce98ca;
+  font-size: 14.9px;
+  font-family: Pretendard;
+  font-weight: 500;
+  word-wrap: break-word;
+  box-shadow: 0px 0px 16px #d294ff;
+  border: 0.82px #ce98ca solid;
+`;

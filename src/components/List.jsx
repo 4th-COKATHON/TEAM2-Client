@@ -1,26 +1,56 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import ListItem from './ListItem';
 import bottomGradient from '../assets/list_container_bottom_gradient.svg';
 import point from '../assets/tab_selected_point.svg';
 
-const List = () => {
+const List = ({ capsuleList, isSelf, setIsSelf, setOpenModal, setCapsuleId, openModal }) => {
+  useEffect(() => {
+    console.log(openModal);
+  }, [openModal]);
+
   return (
     <Wrapper>
       <TabDiv>
-        <TabButton>
-          <img src={point} />
-          <span>내 별</span>
-        </TabButton>
-        <TabButton>
-          <img src={point} />
-          <span>받은 별</span>
-        </TabButton>
+        {isSelf ? (
+          <>
+            <TabButton onClick={() => setIsSelf(true)}>
+              <img src={point} />
+              <span style={{ color: '#FFBEFA' }}>내 별</span>
+            </TabButton>
+            <TabButton onClick={() => setIsSelf(false)}>
+              <img src={point} />
+              <span>받은 별</span>
+            </TabButton>
+          </>
+        ) : (
+          <>
+            <TabButton onClick={() => setIsSelf(true)}>
+              <span>내 별</span>
+            </TabButton>
+            <TabButton onClick={() => setIsSelf(false)}>
+              <img src={point} />
+              <span style={{ color: '#FFBEFA' }}>받은 별</span>
+            </TabButton>
+          </>
+        )}
       </TabDiv>
       <ListDiv>
-        <ListItem />
-        <ListItem />
-        <ListItem />
+        {capsuleList.map((capsule) => (
+          <ListItem
+            key={capsule.articleId}
+            name={capsule.name}
+            title={capsule.title}
+            date={capsule.date}
+            dday={capsule.dday}
+            onClick={() => {
+              setOpenModal(true);
+              setCapsuleId(capsule.articleId);
+              console.log('뫌', openModal);
+              console.log(capsule.articleId);
+            }}
+          />
+        ))}
       </ListDiv>
       <BottomGradient img={bottomGradient} />
     </Wrapper>

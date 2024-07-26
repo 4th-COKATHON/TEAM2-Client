@@ -1,24 +1,51 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import logo from '../assets/list_item_logo.svg';
+import api from '../api/api';
 
-const Capsule = () => {
+const Capsule = ({ setOpenModal, capsuleId }) => {
+  const [name, setName] = useState('');
+  const [content, setContent] = useState('');
+
+  const fetchData = async () => {
+    await api
+      .get(`/api/articles/${capsuleId}`, {
+        params: {
+          articleId: capsuleId,
+        },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
+      .then((res) => {
+        console.log(res.data.data.data);
+        setName(res.data.data.data.senderName);
+        setContent(res.data.data.data.detail);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <Wrapper>
       <Header>
         <TitleDiv>
           <Logo src={logo} alt="logo" />
           <TitleText>
-            <span>송민혁</span>
+            <span>{name}</span>
             <p>이 보내온 별자리</p>
           </TitleText>
         </TitleDiv>
       </Header>
       <div style={{ width: '100%', height: '1px', backgroundColor: '#9F9F9F' }} />
       <ContentDiv>
-        <p>
-          어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~어쩌구~
-        </p>
+        <p>{content}</p>
       </ContentDiv>
     </Wrapper>
   );
