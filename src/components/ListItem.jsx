@@ -34,10 +34,11 @@ const Wrapper = styled.div`
   border-radius: 16px;
   border: none;
   width: 28rem;
-  height: 5rem;
+  height: 4.2rem;
   border: 2px solid var(--Linear, #ce98ca);
   box-shadow: 0.751px 3.003px 15.315px 0px rgba(0, 0, 0, 0.1);
   padding-top: -0.5rem;
+  margin-bottom: 0.5rem;
 `;
 
 const InfoDiv = styled.div`
@@ -59,7 +60,7 @@ const InfoDiv = styled.div`
 const ContentDiv = styled.div`
   display: flex;
   justify-content: space-between;
-  height: 2rem;
+  height: 1.5rem;
   padding: 0 1.2rem;
 `;
 
@@ -69,7 +70,7 @@ const TitleDiv = styled.div`
   align-items: center;
   p {
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1rem;
     color: #7261ff;
     margin-left: 8px;
   }
