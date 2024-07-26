@@ -35,7 +35,7 @@ const Wrapper = styled.div`
   align-items: center;
   justify-content: center;
   width: 30rem;
-  height: 20rem;
+  height: 18rem;
   border-radius: 0.56719rem;
   border: 1px solid var(--Linear, #ce98ca);
   background: linear-gradient(180deg, rgba(206, 152, 202, 0.5) 0%, rgba(163, 117, 215, 0.5) 100%);
