@@ -16,7 +16,7 @@ const ListItem = ({ name, title, date, dday }) => {
           <p>{title}</p>
         </TitleDiv>
         <RemainDiv>
-          <span>D-{dday}</span>
+          <span>{dday === 0 ? 'D-DAY' : dday < 0 ? `D+${-dday}` : `D-${dday}`}</span>
           <img src={arrow} alt="arrow" />
         </RemainDiv>
       </ContentDiv>
@@ -27,6 +27,7 @@ const ListItem = ({ name, title, date, dday }) => {
 export default ListItem;
 
 const Wrapper = styled.div`
+  cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: center;
