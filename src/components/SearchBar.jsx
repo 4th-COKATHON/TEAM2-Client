@@ -2,11 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import bar from '../assets/search_bar.svg';
 
-const SearchBar = () => {
+const SearchBar = ({reciever, setReciever}) => {
+
+  const onChange = (e) => {
+    setReciever(e.target.value);
+  }
+
   return (
     <Wrapper>
       <SearchIcon src={bar} alt="search" />
-      <InputBox type="text" id="name" name="name" />
+      <InputBox type="text" id="name" name="name" value={reciever} onChange={onChange}/>
     </Wrapper>
   );
 };
