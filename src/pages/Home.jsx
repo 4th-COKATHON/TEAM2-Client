@@ -8,22 +8,25 @@ import List from '../components/List';
 import api from '../api/api';
 import RegisterModal from '../components/RegisterModal';
 import Capsule from '../components/Capsule';
+import { useNavigate } from 'react-router';
 
 const Home = () => {
   const [lockedList, setLockedList] = useState([]);
   const [openedList, setOpenedList] = useState([]);
   const [isSelfLocked, setIsSelfLocked] = useState(true);
   const [isSelfOpened, setIsSelfOpened] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState(0);
   const [openModal, setOpenModal] = useState(false);
   const [capsuleId, setCapsuleId] = useState(0);
+
+  const navigate = useNavigate();
 
   const fetchLockedData = async () => {
     await api
       .get('/api/articles', {
         params: {
           lock: true,
-          self: isSelf,
+          self: isSelfLocked,
           page: currentPage,
         },
         headers: {
@@ -45,7 +48,7 @@ const Home = () => {
       .get('/api/articles', {
         params: {
           lock: false,
-          self: isSelf,
+          self: isSelfOpened,
           page: currentPage,
         },
         headers: {
@@ -67,11 +70,15 @@ const Home = () => {
     fetchOpenedData();
   }, []);
 
+  useEffect(() => {
+    console.log(openModal);
+  }, [openModal]);
+
   return (
     <Wrapper>
       <CapsuleSection>
         {openModal ? (
-          <Capsule setOpenModal={setOpenModal} capsuleId={capsuleId}/>
+          <Capsule setOpenModal={setOpenModal} capsuleId={capsuleId} />
         ) : (
           <>
             <Logo src={logo} alt="logo" />
@@ -86,7 +93,14 @@ const Home = () => {
               <br />
               다시 열어볼 수 있게 도와드려요!
             </p>
-            <AddBtn src={addBtn} alt="+" />
+            <AddBtn
+              src={addBtn}
+              alt="+"
+              onClick={() => {
+                setOpenModal(true);
+                navigate('/register');
+              }}
+            />
           </>
         )}
       </CapsuleSection>
@@ -97,6 +111,7 @@ const Home = () => {
           setIsSelf={setIsSelfLocked}
           setOpenModal={setOpenModal}
           setCapsuleId={setCapsuleId}
+          openModal={openModal}
         />
         <List
           capsuleList={openedList}
@@ -104,8 +119,10 @@ const Home = () => {
           setIsSelf={setIsSelfOpened}
           setOpenModal={setOpenModal}
           setCapsuleId={setCapsuleId}
+          openModal={openModal}
         />
       </ListSection>
+      {/* {openModal && <RegisterModal />} */}
     </Wrapper>
   );
 };
