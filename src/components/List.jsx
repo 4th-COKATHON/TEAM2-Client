@@ -4,20 +4,32 @@ import ListItem from './ListItem';
 import bottomGradient from '../assets/list_container_bottom_gradient.svg';
 import point from '../assets/tab_selected_point.svg';
 
-const List = ({ capsuleList }) => {
-  console.log(capsuleList);
-
+const List = ({ capsuleList, isSelf, setIsSelf }) => {
   return (
     <Wrapper>
       <TabDiv>
-        <TabButton>
-          <img src={point} />
-          <span>내 별</span>
-        </TabButton>
-        <TabButton>
-          <img src={point} />
-          <span>받은 별</span>
-        </TabButton>
+        {isSelf ? (
+          <>
+            <TabButton onClick={() => setIsSelf(true)}>
+              <img src={point} />
+              <span style={{ color: '#FFBEFA' }}>내 별</span>
+            </TabButton>
+            <TabButton onClick={() => setIsSelf(false)}>
+              <img src={point} />
+              <span>받은 별</span>
+            </TabButton>
+          </>
+        ) : (
+          <>
+            <TabButton onClick={() => setIsSelf(true)}>
+              <span>내 별</span>
+            </TabButton>
+            <TabButton onClick={() => setIsSelf(false)}>
+              <img src={point} />
+              <span style={{ color: '#FFBEFA' }}>받은 별</span>
+            </TabButton>
+          </>
+        )}
       </TabDiv>
       <ListDiv>
         {capsuleList.map((capsule) => (

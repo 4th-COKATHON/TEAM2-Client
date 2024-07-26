@@ -10,7 +10,8 @@ import api from '../api/api';
 const Home = () => {
   const [lockedList, setLockedList] = useState([]);
   const [openedList, setOpenedList] = useState([]);
-  const [isSelf, setIsSelf] = useState(true);
+  const [isSelfLocked, setIsSelfLocked] = useState(true);
+  const [isSelfOpened, setIsSelfOpened] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
 
   const fetchLockedData = async () => {
@@ -80,8 +81,8 @@ const Home = () => {
         <AddBtn src={addBtn} alt="+" />
       </CapsuleSection>
       <ListSection>
-        <List capsuleList={lockedList} />
-        <List capsuleList={openedList}/>
+        <List capsuleList={lockedList} isSelf={isSelfLocked} setIsSelf={setIsSelfLocked} />
+        <List capsuleList={openedList} isSelf={isSelfOpened} setIsSelf={setIsSelfOpened} />
       </ListSection>
     </Wrapper>
   );
